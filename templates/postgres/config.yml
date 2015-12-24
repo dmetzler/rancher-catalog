@@ -1,5 +1,5 @@
-name: Nuxeo
+name: PostgreSQL
 description: |
-  Nuxeo Content Management Platform
+  PostgreSQL server stack
 version: 9.4-rancher
 category: CMS
