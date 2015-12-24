@@ -10,7 +10,7 @@ postgres-datavolume:
 postgres:
   image: nuxeo/postgres
   labels:
-    io.rancher.sidekicks: nuxeo-datavolume   
+    io.rancher.sidekicks: postgres-datavolume   
     io.rancher.container.hostname_override: container_name
   environment:
     PGDATA: /var/lib/postgresql/data/pgdata
