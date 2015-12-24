@@ -1,6 +1,6 @@
 .catalog:
-  name: "Nuxeo"
-  version: "9.4-rancher"
+  name: "PostgreSQL for Nuxeo"
+  version: "9.4"
   description: "PostgreSQL"
   uuid: postgres-0
   questions:

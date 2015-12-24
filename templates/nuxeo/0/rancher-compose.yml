@@ -1,6 +1,6 @@
 .catalog:
   name: "Nuxeo"
-  version: "7.10-rancher"
+  version: "7.10"
   description: "Nuxeo Content Management Platform"
   uuid: nuxeo-0
   questions:
