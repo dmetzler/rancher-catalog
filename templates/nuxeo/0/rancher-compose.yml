@@ -1,0 +1,30 @@
+.catalog:
+  name: "Nuxeo"
+  version: "7.10-rancher"
+  description: "Nuxeo Content Management Platform"
+  uuid: nuxeo-0
+  questions:
+    - variable: clid
+      description: "A valid CLID to be able to download packages from Nuxeo Online Services. in the form part1\npart2"
+      label: "CLID"
+      type: "string"
+      required: false
+      default: ""
+    - variable: "packages"
+      type: "string"
+      label: "List of Nuxeo packages"
+      description: |
+        List of Nuxeo packages 
+      default: nuxeo-web-mobile nuxeo-drive nuxeo-diff nuxeo-spreadsheet nuxeo-dam nuxeo-template-rendering nuxeo-template-rendering-samples nuxeo-showcase-content
+    - variable: "postgres_source"
+      description: "Link to Postgres service or stack/service"
+      label: "Postgres source"
+      type: "service"
+      required: true
+      default: "Postgres/postgres"
+    - variable: "elasticsearch_source"
+      description: "Link to elasticsearch service or stack/service"
+      label: "Elasticsearch source"
+      type: "service"
+      required: true
+      default: "es/elasticsearch-clients"

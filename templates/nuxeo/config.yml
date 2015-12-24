@@ -1,0 +1,5 @@
+name: Nuxeo
+description: |
+  Nuxeo Content Management Platform
+version: 7.10-rancher
+category: CMS

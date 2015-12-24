@@ -1,0 +1,39 @@
+redis:
+  labels:    
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  image: redis:3.0.3
+  stdin_open: true
+
+nuxeo:
+  ports:
+  - 8080:8080/tcp
+  environment:
+    NUXEO_CLID: ${clid}
+    NUXEO_PACKAGES: ${packages}
+    NUXEO_DB_HOST: postgres
+    NUXEO_DB_TYPE: postgresql
+    NUXEO_ES_HOST: elasticsearch:9300
+    NUXEO_PACKAGES: nuxeo-web-mobile nuxeo-drive nuxeo-diff nuxeo-spreadsheet nuxeo-dam nuxeo-template-rendering nuxeo-template-rendering-samples nuxeo-showcase-content
+  external_links:
+  - ${postgres_source}:postgres
+  - ${elasticsearch_source}:elasticsearch
+  labels:
+    io.rancher.sidekicks: nuxeo-datavolume    
+    io.rancher.container.hostname_override: container_name
+  image: nuxeo/nuxeo
+  links:
+  - redis:redis
+  volumes_from:
+  - nuxeo-datavolume
+
+nuxeo-datavolume:
+  labels:
+    io.rancher.container.start_once: 'true'
+    io.rancher.container.hostname_override: container_name
+  image: nuxeo/nuxeo
+  links:
+  - redis:redis
+  volumes:
+  - /var/lib/nuxeo/data
+  - /var/log/nuxeo
