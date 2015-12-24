@@ -1,5 +1,6 @@
-name: Nuxeo
+name: Nuxeo Platform
 description: |
-  Nuxeo Content Management Platform
+  Enterprise Content Management 
+  Platform for Business Applications
 version: 7.10
 category: CMS

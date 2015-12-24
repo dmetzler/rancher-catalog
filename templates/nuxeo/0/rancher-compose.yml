@@ -1,7 +1,9 @@
 .catalog:
-  name: "Nuxeo"
+  name: "Nuxeo Platform"
   version: "7.10"
-  description: "Nuxeo Content Management Platform"
+  description: |
+    Enterprise Content Management 
+    Platform for Business Applications
   uuid: nuxeo-0
   questions:
     - variable: clid
