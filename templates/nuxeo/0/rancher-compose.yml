@@ -46,7 +46,7 @@ nuxeo:
     # For TCP, request_line needs to be ''
     # TCP Example: 
     # request_line: ''
-    request_line: GET /nuxeo/login.jsp HTTP/1.0
+    request_line: GET /nuxeo/login.jsp 
     healthy_threshold: 2
     # Response timeout is measured in milliseconds
     response_timeout: 2000
