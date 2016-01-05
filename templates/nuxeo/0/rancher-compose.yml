@@ -30,3 +30,9 @@
       type: "service"
       required: true
       default: "es/elasticsearch-clients"
+    - variable: "elasticsearch_clustername"
+      description: "Name of the ES cluster to join"
+      label: "ES Cluster Name"
+      type: "string"
+      required: true
+      default: "es"
