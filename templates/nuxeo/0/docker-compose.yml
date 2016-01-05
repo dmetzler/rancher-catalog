@@ -32,7 +32,7 @@ nuxeo-datavolume:
   labels:
     io.rancher.container.start_once: 'true'
     io.rancher.container.hostname_override: container_name
-  image: nuxeo/nuxeo
+  image: nuxeo
   entrypoint: /bin/true
   links:
   - redis:redis

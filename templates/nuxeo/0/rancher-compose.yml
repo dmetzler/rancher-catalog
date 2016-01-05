@@ -36,3 +36,17 @@
       type: "string"
       required: true
       default: "es"
+nuxeo:
+  scale: 1
+  health_check:
+    port: 8080
+    # Interval is measured in milliseconds
+    interval: 5000
+    unhealthy_threshold: 5
+    # For TCP, request_line needs to be ''
+    # TCP Example: 
+    # request_line: ''
+    request_line: GET /nuxeo/login.jsp HTTP/1.0
+    healthy_threshold: 2
+    # Response timeout is measured in milliseconds
+    response_timeout: 2000
