@@ -22,7 +22,7 @@ nuxeo:
   labels:
     io.rancher.sidekicks: nuxeo-datavolume    
     io.rancher.container.hostname_override: container_name
-  image: nuxeo/nuxeo
+  image: nuxeo
   links:
   - redis:redis
   volumes_from:
