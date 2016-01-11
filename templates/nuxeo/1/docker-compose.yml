@@ -24,16 +24,6 @@ redis:
   image: redis:3.0.3
   stdin_open: true
 
-
-nuxeo-binaries-datavolume:
- labels:
-    io.rancher.container.start_once: 'true'
-    io.rancher.container.hostname_override: container_name
-  image: nuxeo
-  entrypoint: /bin/true
-  volumes:
-  - /binaries  
-
 nuxeo-datavolume:
   labels:
     io.rancher.container.start_once: 'true'
