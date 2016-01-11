@@ -1,0 +1,84 @@
+postgres-datavolume:
+  image: nuxeo/postgres
+  volumes:
+    - /var/lib/postgresql/data
+  entrypoint: /bin/true
+  labels:    
+    io.rancher.container.hostname_override: container_name
+
+postgres:
+  image: nuxeo/postgres
+  environment:
+    - POSTGRES_USER=nuxeo
+    - POSTGRES_PASSWORD=nuxeo    
+  labels:
+    io.rancher.sidekicks: postgres-datavolume
+    io.rancher.container.hostname_override: container_name
+  volumes_from:
+  - postgres-datavolume
+
+elasticsearch-datavolume:
+  image: elasticsearch:1
+  entrypoint: /bin/true
+  volumes:
+    - /usr/share/elasticsearch/data
+  labels:    
+    io.rancher.container.hostname_override: container_name
+
+elasticsearch:
+  image: elasticsearch:1
+  labels:    
+    io.rancher.container.hostname_override: container_name
+    io.rancher.sidekicks: elasticsearch-datavolume
+    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+  volumes_from:
+  - elasticsearch-datavolume
+
+redis:
+  labels:    
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  image: redis:3.0.3
+  stdin_open: true
+
+nuxeo:
+  environment:
+    NUXEO_CLID: ${clid}
+    NUXEO_PACKAGES: ${packages}
+    NUXEO_DB_HOST: postgres
+    NUXEO_DB_TYPE: postgresql
+    NUXEO_ES_HOSTS: elasticsearch:9300
+    NUXEO_ES_CLUSTER_NAME: ${elasticsearch_clustername}
+    NUXEO_PACKAGES: nuxeo-web-mobile nuxeo-drive nuxeo-diff nuxeo-spreadsheet nuxeo-dam nuxeo-template-rendering nuxeo-template-rendering-samples nuxeo-showcase-content
+    NUXEO_DATA: /data/nuxeo/data/
+    NUXEO_LOG: /data/nuxeo/log/
+  labels:
+    io.rancher.sidekicks: nuxeo-datavolume    
+    io.rancher.container.hostname_override: container_name
+    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+  image: nuxeo
+  links:
+  - redis: redis
+  - postgres: postgres
+  - elasticsearch: elasticsearch
+  volumes_from:
+  - nuxeo-datavolume
+  - nuxeo-binaries-datavolume
+
+nuxeo-binaries-datavolume:
+ labels:
+    io.rancher.container.start_once: 'true'
+    io.rancher.container.hostname_override: container_name
+  image: nuxeo
+  entrypoint: /bin/true
+  volumes:
+  - /binaries  
+
+nuxeo-datavolume:
+  labels:
+    io.rancher.container.start_once: 'true'
+    io.rancher.container.hostname_override: container_name
+  image: nuxeo
+  entrypoint: /bin/true
+  volumes:
+  - /data  

@@ -15,7 +15,6 @@ nuxeo:
     NUXEO_DB_TYPE: postgresql
     NUXEO_ES_HOSTS: elasticsearch:9300
     NUXEO_ES_CLUSTER_NAME: ${elasticsearch_clustername}
-    NUXEO_PACKAGES: nuxeo-web-mobile nuxeo-drive nuxeo-diff nuxeo-spreadsheet nuxeo-dam nuxeo-template-rendering nuxeo-template-rendering-samples nuxeo-showcase-content
   external_links:
   - ${postgres_source}:postgres
   - ${elasticsearch_source}:elasticsearch
