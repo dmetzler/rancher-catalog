@@ -24,25 +24,6 @@ redis:
   image: redis:3.0.3
   stdin_open: true
 
-nuxeo:
-  environment:
-    NUXEO_CLID: ${clid}
-    NUXEO_PACKAGES: ${packages}
-    NUXEO_DB_HOST: postgres
-    NUXEO_DB_TYPE: postgresql    
-    NUXEO_DATA: /data/nuxeo/data/
-    NUXEO_LOG: /data/nuxeo/log/
-  labels:
-    io.rancher.sidekicks: nuxeo-datavolume    
-    io.rancher.container.hostname_override: container_name
-
-  image: nuxeo
-  links:
-  - redis: redis
-  - postgres: postgres  
-  volumes_from:
-  - nuxeo-datavolume
-  - nuxeo-binaries-datavolume
 
 nuxeo-binaries-datavolume:
  labels:
@@ -62,3 +43,24 @@ nuxeo-datavolume:
   volume_driver: convoy-nfs
   volumes:
     - nxdata:/data  
+
+
+nuxeo:
+  environment:
+    NUXEO_CLID: ${clid}
+    NUXEO_PACKAGES: ${packages}
+    NUXEO_DB_HOST: postgres
+    NUXEO_DB_TYPE: postgresql    
+    NUXEO_DATA: /data/nuxeo/data/
+    NUXEO_LOG: /data/nuxeo/log/
+  labels:
+    io.rancher.sidekicks: nuxeo-datavolume    
+    io.rancher.container.hostname_override: container_name
+    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+  image: nuxeo
+  links:
+  - redis: redis
+  - postgres: postgres  
+  volumes_from:
+  - nuxeo-datavolume
+  - nuxeo-binaries-datavolume
