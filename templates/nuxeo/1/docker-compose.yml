@@ -1,7 +1,8 @@
 postgres-datavolume:
   image: nuxeo/postgres
+  volume_driver: convoy-nfs
   volumes:
-    - /var/lib/postgresql/data
+    - nxpg:/var/lib/postgresql/data
   entrypoint: /bin/true
   labels:    
     io.rancher.container.hostname_override: container_name
@@ -16,36 +17,6 @@ postgres:
     io.rancher.container.hostname_override: container_name
   volumes_from:
   - postgres-datavolume
-
-elasticsearch:
-  image: rancher/elasticsearch-conf:v0.4.0
-  labels:
-    io.rancher.container.hostname_override: container_name
-    io.rancher.sidekicks: elasticsearch-base,elasticsearch-datavolume
-    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
-  links:
-    - elasticsearch-masters:es-masters
-elasticsearch-datavolume:
-  labels:
-    elasticsearch.config.version: '0'
-    io.rancher.container.hostname_override: container_name
-    io.rancher.container.start_once: true
-  volumes:
-    - /usr/share/elasticsearch/data
-  entrypoint: /bin/true
-  image: elasticsearch:1.7.3
-elasticsearch-base:
-  labels:
-    elasticsearch.config.version: '0'
-    io.rancher.container.hostname_override: container_name
-  image: elasticsearch:1.7.3
-  entrypoint:
-    - /opt/rancher/bin/run.sh
-  volumes_from:
-    - elasticsearch
-    - elasticsearch-datavolume
-
-
 redis:
   labels:    
     io.rancher.container.hostname_override: container_name
@@ -58,10 +29,7 @@ nuxeo:
     NUXEO_CLID: ${clid}
     NUXEO_PACKAGES: ${packages}
     NUXEO_DB_HOST: postgres
-    NUXEO_DB_TYPE: postgresql
-    NUXEO_ES_HOSTS: elasticsearch:9300
-    NUXEO_ES_CLUSTER_NAME: nuxeocluster
-    NUXEO_PACKAGES: nuxeo-web-mobile nuxeo-drive nuxeo-diff nuxeo-spreadsheet nuxeo-dam nuxeo-template-rendering nuxeo-template-rendering-samples nuxeo-showcase-content
+    NUXEO_DB_TYPE: postgresql    
     NUXEO_DATA: /data/nuxeo/data/
     NUXEO_LOG: /data/nuxeo/log/
   labels:
@@ -71,8 +39,7 @@ nuxeo:
   image: nuxeo
   links:
   - redis: redis
-  - postgres: postgres
-  - elasticsearch: elasticsearch
+  - postgres: postgres  
   volumes_from:
   - nuxeo-datavolume
   - nuxeo-binaries-datavolume
@@ -92,5 +59,6 @@ nuxeo-datavolume:
     io.rancher.container.hostname_override: container_name
   image: nuxeo
   entrypoint: /bin/true
+  volume_driver: convoy-nfs
   volumes:
-  - /data  
+    - nxdata:/data  
