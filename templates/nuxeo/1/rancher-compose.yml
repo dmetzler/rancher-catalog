@@ -18,6 +18,7 @@
       description: |
         List of Nuxeo packages 
       default: nuxeo-web-mobile nuxeo-drive nuxeo-diff nuxeo-spreadsheet nuxeo-dam nuxeo-template-rendering nuxeo-template-rendering-samples nuxeo-showcase-content
+
 nuxeo:
   scale: 1
   health_check:
@@ -32,11 +33,3 @@ nuxeo:
     healthy_threshold: 2
     # Response timeout is measured in milliseconds
     response_timeout: 2000
-elasticsearch:
-  metadata:
-    elasticsearch:
-      yml:
-        cluster.name: "nuxeocluster"
-        node.name: "$${HOSTNAME}"
-        node.data: "true"
-        node.master: "true"
