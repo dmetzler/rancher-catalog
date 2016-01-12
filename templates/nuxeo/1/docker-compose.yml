@@ -58,8 +58,6 @@ nuxeo-datavolume:
     - ${stack_name}-data:/data  
 
 nuxeo:
-  ports:
-  - 8080:8080/tcp
   environment:
     NUXEO_CLID: ${clid}
     NUXEO_PACKAGES: ${packages}
