@@ -2,7 +2,7 @@ postgres-datavolume:
   image: nuxeo/postgres
   volume_driver: convoy-nfs
   volumes:
-    - nxpg:/var/lib/postgresql/data
+    - nuxeo_pg:/var/lib/postgresql/data
   entrypoint: /bin/true
   labels:    
     io.rancher.container.hostname_override: container_name
@@ -33,7 +33,7 @@ nuxeo-datavolume:
   entrypoint: /bin/true
   volume_driver: convoy-nfs
   volumes:
-    - nxdata:/data  
+    - nuxeo_data:/data  
 
 nuxeo:
   ports:
