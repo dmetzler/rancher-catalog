@@ -3,7 +3,7 @@ postgres-datavolume:
     io.rancher.container.start_once: 'true'
     io.rancher.container.hostname_override: container_name
   image: nuxeo/postgres
-  entrypoint: /bin/true
+  entrypoint: chown -R postgres:postgres /var/lib/postgresql/data
   volume_driver: convoy-nfs
   volumes:
     - ${nxtechid}-postgres:/var/lib/postgresql/data
@@ -19,7 +19,7 @@ postgres:
   volumes_from:
   - postgres-datavolume
 
-
+# Copied from default Rancher ES Stack : don't modifiy service names
 elasticsearch-masters:
   image: rancher/elasticsearch-conf:v0.4.0
   labels:
@@ -30,8 +30,6 @@ elasticsearch-datavolume-masters:
     elasticsearch.datanode.config.version: '0'
     io.rancher.container.hostname_override: container_name
     io.rancher.container.start_once: true
-  volumes:
-    - /usr/share/elasticsearch/data
   entrypoint: /bin/true
   image: elasticsearch:1.7.3
 elasticsearch-base-master:
@@ -62,7 +60,8 @@ nuxeo-datavolume:
   entrypoint: /bin/true
   volume_driver: convoy-nfs
   volumes:
-    - ${nxtechid}-data:/data  
+    - /var/lib/nuxeo/data
+    - /var/log/nuxeo
 
 nuxeo:
   environment:
