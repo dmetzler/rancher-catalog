@@ -8,7 +8,7 @@
   questions:
     - variable: nxtechid
       description: "The technical ID of this instance"
-      label:"Tech ID"
+      label: "Tech ID"
       type: "string"
       required: true
       default: "nxio_000001"
