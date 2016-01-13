@@ -7,7 +7,7 @@
   uuid: nuxeo-1
   questions:
     - variable: nxtechid
-      description: "The technical ID of this instance
+      description: "The technical ID of this instance"
       label:"Tech ID"
       type: "string"
       required: true
