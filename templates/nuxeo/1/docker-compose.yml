@@ -20,25 +20,35 @@ postgres:
   - postgres-datavolume
 
 
+elasticsearch:
+  image: rancher/elasticsearch-conf:v0.4.0
+  labels:
+    io.rancher.container.hostname_override: container_name
+    io.rancher.sidekicks: elasticsearch-base,elasticsearch-datavolume
+
 elasticsearch-datavolume:
   labels:
-    io.rancher.container.start_once: 'true'
+    elasticsearch.datanode.config.version: '0'
     io.rancher.container.hostname_override: container_name
-  image: nuxeo/postgres
-  entrypoint: /bin/true
+    io.rancher.container.start_once: true
   volume_driver: convoy-nfs
   volumes:
     - ${nxtechid}-elasticsearch:/usr/share/elasticsearch/data
+  entrypoint: /bin/true
+  image: elasticsearch:1.7.3
 
-elasticsearch:
-  image: elasticsearch:1  
-  command: elasticsearch -Des.cluster.name="elasticsearch"
+elasticsearch-base:
   labels:
-    io.rancher.sidekicks: elasticsearch-datavolume    
+    elasticsearch.master.config.version: '0'
     io.rancher.container.hostname_override: container_name
-    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+  image: elasticsearch:1.7.3
+  net: "container:elasticsearch-masters"
   volumes_from:
+    - elasticsearch
     - elasticsearch-datavolume
+  entrypoint:
+    - /opt/rancher/bin/run.sh
+
 
 redis:
   labels:    
@@ -64,6 +74,8 @@ nuxeo:
     NUXEO_DB_HOST: postgres
     NUXEO_DB_TYPE: postgresql
     NUXEO_ES_HOSTS: elasticsearch:9300
+    NUXEO_DATA: /data/nuxeo/data/
+    NUXEO_LOG: /data/nuxeo/log/
   labels:
     io.rancher.sidekicks: nuxeo-datavolume    
     io.rancher.container.hostname_override: container_name
