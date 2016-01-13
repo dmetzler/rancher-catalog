@@ -72,7 +72,14 @@ nuxeo:
   links:
   - redis:redis
   - postgres:postgres
+  - elasticsearch:elasticsearch
   volumes_from:
   - nuxeo-datavolume
 
+lb:
+  ports:
+  - 8080:8080
+  image: rancher/load-balancer-service
+  links:
+  - nuxeo:nuxeo
 
