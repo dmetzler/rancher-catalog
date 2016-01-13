@@ -6,6 +6,12 @@
     Platform for Business Applications
   uuid: nuxeo-1
   questions:
+    - variable: nxtechid
+      description: "The technical ID of this instance
+      label:"Tech ID"
+      type: "string"
+      required: true
+      default: "nxio_000001"
     - variable: clid
       description: "A valid CLID to be able to download packages from Nuxeo Online Services. in the form part1\npart2"
       label: "CLID"
