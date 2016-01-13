@@ -20,37 +20,31 @@ postgres:
   - postgres-datavolume
 
 
-
-elasticsearch:
+elasticsearch-masters:
   image: rancher/elasticsearch-conf:v0.4.0
   labels:
     io.rancher.container.hostname_override: container_name
-    io.rancher.sidekicks: elasticsearch-base, elasticsearch-datavolume
-
-
-elasticsearch-datavolume:
+    io.rancher.sidekicks: elasticsearch-base-master,elasticsearch-datavolume-masters
+elasticsearch-datavolume-masters:
   labels:
     elasticsearch.datanode.config.version: '0'
     io.rancher.container.hostname_override: container_name
     io.rancher.container.start_once: true
-  volume_driver: convoy-nfs
   volumes:
-    - ${nxtechid}-elasticsearch:/usr/share/elasticsearch/data
+    - /usr/share/elasticsearch/data
   entrypoint: /bin/true
   image: elasticsearch:1.7.3
-
-elasticsearch-base:
+elasticsearch-base-master:
   labels:
     elasticsearch.master.config.version: '0'
     io.rancher.container.hostname_override: container_name
   image: elasticsearch:1.7.3
-  net: "container:elasticsearch"
+  net: "container:elasticsearch-masters"
   volumes_from:
-    - elasticsearch
-    - elasticsearch-datavolume
+    - elasticsearch-masters
+    - elasticsearch-datavolume-masters
   entrypoint:
     - /opt/rancher/bin/run.sh
-
 
 
 redis:
@@ -87,7 +81,7 @@ nuxeo:
   links:
   - redis:redis
   - postgres:postgres
-  - elasticsearch:elasticsearch
+  - elasticsearch-masters:elasticsearch
   volumes_from:
   - nuxeo-datavolume
 
