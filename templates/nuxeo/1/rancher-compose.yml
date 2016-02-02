@@ -24,6 +24,12 @@
       description: |
         List of Nuxeo packages 
       default: nuxeo-web-mobile nuxeo-drive nuxeo-diff nuxeo-spreadsheet nuxeo-dam nuxeo-template-rendering nuxeo-template-rendering-samples nuxeo-showcase-content
+    - variable: "volumedriver"
+      type: "string"
+      label: "Volume driver"
+      description: |
+        Specifiy docker volume driver  to use
+      default: local
 
 nuxeo:
   scale: 1
