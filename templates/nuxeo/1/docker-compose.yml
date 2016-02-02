@@ -86,8 +86,8 @@ nuxeo:
   - nuxeo-datavolume
 
 lb:
-  ports:
-  - 8080:8080
+  expose:
+  - 80:8080
   image: rancher/load-balancer-service
   links:
   - nuxeo:nuxeo
