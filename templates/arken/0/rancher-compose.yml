@@ -1,0 +1,16 @@
+.catalog:
+  name: "Arken"
+  version: "0.1"
+  description: |
+    High level app management on top of rancher
+  minimum_rancher_version: "v1.0.0"
+  questions:
+    - variable: "REPLICAS"
+      description: "Number of Etcd nodes. 3, 5, or 7 are good choices"
+      label: "Number of Nodes:"
+      required: true
+      default: 3
+      type: "int"
+etcd:
+  retain_ip: true
+  scale: 1
