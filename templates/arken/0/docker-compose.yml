@@ -51,8 +51,10 @@ arken:
     RANCHER_ACCESSKEY: ${RANCHER_ACCESSKEY}
     RANCHER_SECRETKEY: ${RANCHER_SECRETKEY}
 gogeta:
-  image: arken/gogeta:latest
+  image: arken/gogeta:v2
   links:
     - etcd:etcd
   ports:
     - "80:7777"
+  labels:
+    io.rancher.scheduler.global: 'true'
