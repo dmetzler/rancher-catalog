@@ -19,7 +19,7 @@
       type: "string"
     - variable: "RANCHER_SECRETKEY"
       description: "Rancher API Secret key"
-      label: "Rancher Host:"
+      label: "Secret Key:"
       required: true
       default: ""
       type: "password"
