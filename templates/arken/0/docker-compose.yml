@@ -45,6 +45,7 @@ arken:
   ports:
     - "8888:8888"
   environment:
+    DRIVER: rancher
     ETCDADDRESS: http://etcd:2379/
     RANCHER_HOST: ${RANCHER_HOST}
     RANCHER_ACCESSKEY: ${RANCHER_ACCESS_KEY}
